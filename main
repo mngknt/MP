@@ -1,0 +1,65 @@
+#include <stdio.h>
+/* This function calls the start of the whole program. */
+void start(int *nTransaction);
+int main();
+
+/* This function shows the introductory greeting and choices.*/
+void displayGreetingNChoices ()
+{
+	printf ("\n");
+	printf ("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n");
+	printf ("* * * * * * * * * *     Welcome to B1G CAT'S BURGERS!     * * * * * * * * * *\n");
+	printf ("* * * * * * *      \"TAGLINE\"                                  * * * * * * *\n");
+	printf ("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n\n");
+	printf ("---------------------------------  OUR MENU  ---------------------------------\n");
+	printf ("BUNS:       PATTIES:     TOPPINGS:      SAUCES:         SIDE DISH:     DRINKS:       \n");
+	printf ("[1]Plain    [1]Pork      [1]Cucumber    [1]Ketchup      [1]Fries       [1]Water      \n"); 
+	printf ("[2]Sesame   [2]Beef      [2]Cheese      [2]Mustard      [2]Tacos       [2]Lemonade   \n");
+	printf ("[3]Brioche  [3]Veggies   [3]Lettuce     [3]Mayonnaise   [3]Nuggets     [3]Beer       \n");
+	printf ("                         [4]Bacon                                                    \n");
+	printf ("                         [5]Tomato                                                   \n");
+	printf ("                         [6]Egg                                                      \n");
+	printf ("                         [7]Mushroom                                                 \n");
+	printf ("[N]ext\n"); 
+	printf ("[X]Cancel Order\n");
+	printf ("------------------------------------------------------------------------------\n");
+}
+
+/*  This function gets the bun type.
+    Precondition: Input must be 1, 2, or 3.
+    @param *nBuns: The type of bun the user wants to have. */ 
+void buns(int *nBuns) 
+{
+	char cSpace;
+	int nInval = 0;
+	int nTmp = 0;
+	
+	do {
+		if (nInval > 0) 
+  	printf("Invalid Input!\n");
+		printf("Enter Bun Type: ");
+		scanf("%d", &*nBuns);
+		scanf("%c", &cSpace);
+		nInval++;
+		} while ((*nBuns < 1 || *nBuns > 3) && nTmp == 0); 
+}
+
+
+/* This function gets the preffered patty.
+   Precondition: Input must be 1, 2, or 3.
+   @param *cPatty: The patty user wants to have.
+   @param *nTransaction: is the whole patty transaction (which includes every step). */
+void patty (char *cPatty, int *nTransaction)
+{
+	char cSpace;
+	int nInval = 0;
+	
+	do{
+		if (nInval > 0)        
+		printf("Invalid Input\n");
+		printf("Enter Pizza Size: ");
+		scanf("%c", &*cPatty);
+		scanf("%c", &cSpace);
+		nInval++;	
+		} while (*cPatty != 1 && *cPatty != 2 && *cPatty != 3); 
+}
