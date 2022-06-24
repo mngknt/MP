@@ -1,4 +1,19 @@
+/********************************************************************************
+	This is to certify that this project is my own work, based on my personal 
+	efforts in studying and applying the concepts learned. I have constructed 
+	the functions and their respective algorithms and corresponding code by 
+	myself. The program was run, tested, and debugged by my own efforts. I 
+	further certify that I have not copied in part or whole or otherwise 
+	plagiarized the work of other students and/or persons.
+                                KENNETH LOUIS B. MANGULABNAN , DLSU ID#12105791
+*********************************************************************************/
+/*
+	Programmed by: Kenneth Louis B. Mangulabnan
+	Last modified: June 24, 2022
+	Version:       8
+*/
 #include <stdio.h>
+
 /* This function calls the start of the whole program. */
 void start(int *nTransaction);
 int main();
@@ -9,57 +24,631 @@ void displayGreetingNChoices ()
 	printf ("\n");
 	printf ("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n");
 	printf ("* * * * * * * * * *     Welcome to B1G CAT'S BURGERS!     * * * * * * * * * *\n");
-	printf ("* * * * * * *      \"TAGLINE\"                                  * * * * * * *\n");
+	printf ("* * * * * * *             \"It's Big Cat or Nothing\"           * * * * * * *\n");
 	printf ("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n\n");
 	printf ("---------------------------------  OUR MENU  ---------------------------------\n");
-	printf ("BUNS:       PATTIES:     TOPPINGS:      SAUCES:         SIDE DISH:     DRINKS:       \n");
-	printf ("[1]Plain    [1]Pork      [1]Cucumber    [1]Ketchup      [1]Fries       [1]Water      \n"); 
-	printf ("[2]Sesame   [2]Beef      [2]Cheese      [2]Mustard      [2]Tacos       [2]Lemonade   \n");
-	printf ("[3]Brioche  [3]Veggies   [3]Lettuce     [3]Mayonnaise   [3]Nuggets     [3]Beer       \n");
-	printf ("                         [4]Bacon                                                    \n");
-	printf ("                         [5]Tomato                                                   \n");
-	printf ("                         [6]Egg                                                      \n");
-	printf ("                         [7]Mushroom                                                 \n");
+	printf ("BUNS:       PATTIES:    INGREDIENTS:    SAUCES:       SIDE DISH:    DRINKS:   \n");
+	printf ("[1]Plain    [P]ork      [C]ucumber      [K]etchup     [F]ries       [W]ater   \n"); 
+	printf ("[2]Sesame   [B]eef     C[H]eese         [M]ustard     [T]acos       [L]emonade\n");
+	printf ("[3]Brioche  [V]eggies   [L]ettuce      M[A]yonnaise   [N]uggets     [B]eer    \n");
+	printf ("                        [B]acon                                               \n");
+	printf ("                        [T]omato                                              \n");
+	printf ("                        [E]gg                                                 \n");
+	printf ("                        [M]ushroom                                            \n");
 	printf ("[N]ext\n"); 
 	printf ("[X]Cancel Order\n");
 	printf ("------------------------------------------------------------------------------\n");
 }
 
-/*  This function gets the bun type.
+/*  This function gets the bun type of the burger.
     Precondition: Input must be 1, 2, or 3.
-    @param *nBuns: The type of bun the user wants to have. */ 
+    @param *nBuns: The type of buns the user wants to have. */ 
 void buns(int *nBuns) 
 {
 	char cSpace;
-	int nInval = 0;
+	int nInval = 0; 
 	int nTmp = 0;
-	
 	do {
-		if (nInval > 0) 
-  	printf("Invalid Input!\n");
+		if (nInval > 0)  //for invalid input
+      	printf("Invalid Input!\n");
 		printf("Enter Bun Type: ");
 		scanf("%d", &*nBuns);
-		scanf("%c", &cSpace);
+		scanf("%c", &cSpace); 
+		if (*nBuns == 80808) //code to terminate program
+			nTmp = 1;
 		nInval++;
-		} while ((*nBuns < 1 || *nBuns > 3) && nTmp == 0); 
+		} while ((*nBuns < 1 || *nBuns > 3) && nTmp == 0);  //if input is not from 1 to 3, function stops
 }
 
+/*  This function gets the burger patty of the burger.
+    Precondition: Input must be p/P, b/B, v/V.
+    @param *nPork: The number of pork patties the user wants to have.
+    @param *nBeef:  The number of beef patties the user wants to have.
+    @param *nVeggies: The number of veggie patties the user wants to have.
+    @param *nTransaction: is the whole transaction (which includes every step).*/ 
+void patty (int *nPork, int *nBeef, int *nVeggies, int *nTransaction)
+{
+	char cSpace;
+	int nPattyctr = 0; //counts the user entry 
+	char cPatty;
+	do {
+		printf("Enter Burger Patty: ");
+		scanf("%c", &cPatty);
+		scanf("%c", &cSpace);
+		if (cPatty =='x' || cPatty =='X') //exits the function = new transaction
+			start(&*nTransaction);
+			
+		if (cPatty =='p' || cPatty =='P') { //pork 
+			*nPork += 1;
+			nPattyctr++;
+		}
+		if (cPatty =='b' || cPatty == 'B') { //beef
+			*nBeef += 1;
+			nPattyctr++;
+		}
+		if (cPatty =='v' || cPatty =='V') { //veggie
+			*nVeggies += 1;
+			nPattyctr ++;
+		}
+		if (nPattyctr == 0 && (cPatty == 'n' || cPatty == 'N')) //if user enters N at the 1st question
+			printf("You should pick a Patty!\n");		
+		if (cPatty != 'p' && cPatty != 'P' && cPatty != 'b' && cPatty != 'B' && cPatty != 'v' && cPatty != 'V' && cPatty != 'n' && cPatty != 'N')
+			printf("Invalid Input!\n");
+	} while (!(cPatty =='n' || cPatty =='N') || nPattyctr == 0 && nPattyctr == 4);
+}
 
-/* This function gets the preffered patty.
-   Precondition: Input must be 1, 2, or 3.
-   @param *cPatty: The patty user wants to have.
-   @param *nTransaction: is the whole patty transaction (which includes every step). */
-void patty (char *cPatty, int *nTransaction)
+/*  This function gets the burger ingredients.
+    Precondition: Input must be c/C, h/H, l/L, b/B, t/T, e/E, M/m.
+    @param *nCucumber: The number of cucumber the user wants to have on burger ingredients.
+    @param *nCheese: The number of cheese the user wants to have on burger ingredients.
+    @param *nLettuce: The number of lettuce the user wants to have on burger ingredients. 
+    @param *nBacon: The number of bacon the user wants to have on burger ingredients. 
+    @param *nTomato: The number of tomato the user wants to have on burger ingredients.
+    @param *nEgg: The number of egg the user wants to have on burger ingredients.
+    @param *nMushroom: The number of mushroom the user wants to have on burger ingredients.
+    @param *nTransaction: is the whole transaction (which includes every step).*/ 
+void ingredients(int *nCucumber, int *nCheese, int *nLettuce, int *nBacon, int *nTomato, int *nEgg, int *nMushroom, int *nTransaction)
+{
+	char cSpace;
+	int nIngredientctr = 0;
+	char cIngredient;
+	do {
+		printf("Enter Burger Ingredients: ");
+		scanf("%c", &cIngredient);
+		scanf("%c", &cSpace);
+		if (cIngredient =='x' || cIngredient =='X') //exits the function = new transaction
+			start(&*nTransaction);
+		if (cIngredient =='c' || cIngredient =='C') {
+			*nCucumber += 1;
+			nIngredientctr++;
+		}
+		if (cIngredient =='h' || cIngredient =='H') {
+			*nCheese += 1;
+			nIngredientctr++;
+		}
+		if (cIngredient =='l' || cIngredient =='L') {
+			*nLettuce += 1;
+			nIngredientctr ++;
+		}
+		if (cIngredient =='b' || cIngredient =='B') {
+			*nBacon += 1;
+			nIngredientctr++;
+		}
+		if (cIngredient =='t' || cIngredient =='T') {
+			*nTomato += 1;
+			nIngredientctr++;
+	    }	
+	    if (cIngredient =='e' || cIngredient =='E') {
+			*nEgg += 1;
+			nIngredientctr++;
+		}
+		if (cIngredient =='m' || cIngredient =='M') {
+			*nMushroom += 1;
+			nIngredientctr++;
+	    }
+		if (nIngredientctr == 0 && (cIngredient == 'n' || cIngredient == 'N'))
+			printf("You should pick an Ingredient!\n");		
+		if (cIngredient != 'c' && cIngredient != 'C' && cIngredient != 'h' && cIngredient != 'H' && cIngredient != 'l' && cIngredient != 'L' && 
+		    cIngredient != 'b' && cIngredient != 'B' && cIngredient != 't' && cIngredient != 'T'&& cIngredient != 'e' && cIngredient != 'E'
+			&& cIngredient != 'm' && cIngredient != 'M' && cIngredient != 'n' && cIngredient != 'N')
+			printf("Invalid Input!\n");
+	} while (!(cIngredient =='n' || cIngredient =='N') || nIngredientctr == 0);
+}
+
+/*  This function gets the burger sauce for the burger.
+    Precondition: Input must be k/K, m/M, or a/A.
+    @param *cSauce: The type of sauce the user wants to have. 
+    @param *nTransaction: is the whole transaction (which includes every step).*/ 
+void sauces (char *cSauce, int *nTransaction)
 {
 	char cSpace;
 	int nInval = 0;
-	
 	do{
 		if (nInval > 0)        
-		printf("Invalid Input\n");
-		printf("Enter Pizza Size: ");
-		scanf("%c", &*cPatty);
+			printf("Invalid Input!\n");
+		printf("Enter Burger Sauce: ");
+		scanf("%c", &*cSauce);
 		scanf("%c", &cSpace);
+		if (*cSauce == 'x' || *cSauce == 'X')
+			start(&*nTransaction);	
 		nInval++;	
-		} while (*cPatty != 1 && *cPatty != 2 && *cPatty != 3); 
+		
+		} while (*cSauce != 'k' && *cSauce != 'K' && *cSauce != 'm' && *cSauce != 'M' && *cSauce != 'a' && *cSauce != 'A');
+}
+
+/*  This function gets the side dish.
+    Precondition: Input must be f/F, t/T, or n/N.
+    @param *cSideDish: The type of side dish the user wants to have. 
+    @param *nTransaction: is the whole transaction (which includes every step).*/ 
+void sideDishes (char *cSideDish, int *nTransaction)
+{
+	char cSpace;
+	int nInval = 0;
+	do{
+		if (nInval > 0)        
+			printf("Invalid Input!\n");
+		printf("Enter Side Dish: ");
+		scanf("%c", &*cSideDish);
+		scanf("%c", &cSpace);
+		if (*cSideDish == 'x' || *cSideDish == 'X')
+			start(&*nTransaction);	
+		nInval++;	
+		} while (*cSideDish != 'f' && *cSideDish != 'F' && *cSideDish != 't' && *cSideDish != 'T' && *cSideDish != 'n' && *cSideDish != 'N');
+}
+
+/*  This function gets the type of drink the user wants to have.
+    Precondition: Input must be w/W, l/L, b/B.
+    @param *nWater: The number of water the user wants to have. 
+    @param *nLemonade: The number of lemonades the user wants to have. 
+    @param *nBeer: The number of beers the user wants to have.  
+    @param *nTransaction: is the whole transaction (which includes every step).*/ 
+void drinks(int *nWater, int *nLemonade, int *nBeer, int *nTransaction)
+{
+	char cSpace;
+	int nDrinkctr = 0;
+	char cDrink;
+	do {
+		printf("Enter Drinks: ");
+		scanf("%c", &cDrink);
+		scanf("%c", &cSpace);
+		if (cDrink =='x' || cDrink =='X')
+			start(&*nTransaction);
+		if (cDrink =='w' || cDrink =='W') {
+			*nWater += 1;
+			nDrinkctr++;
+		}
+		if (cDrink =='l' || cDrink == 'L') {
+			*nLemonade += 1;
+			nDrinkctr++;
+		}
+		if (cDrink =='b' || cDrink =='B') {
+			*nBeer += 1;
+			nDrinkctr ++;
+		}
+		if (nDrinkctr == 0 && (cDrink == 'n' || cDrink == 'N'))
+			printf("You should pick a drink!\n");		
+		if (cDrink != 'w' && cDrink != 'W' && cDrink != 'l' && cDrink != 'L' && cDrink != 'b' && cDrink != 'B')
+			printf("\n");
+	} while (!(cDrink =='n' || cDrink =='N') || nDrinkctr == 0);
+}
+
+/*  This function gets the input payment of the user.
+    Precondition: The user must input his payment based on the given parameters.
+    @param *nTransaction: is the whole transaction (which includes every step).*/ 
+void payment (int nBuns, int nPork, int nBeef, int nVeggies, int nCucumber, int nCheese, int nLettuce, int nBacon, int nTomato, int nEgg, int nMushroom, char cSauce, char cSideDish, int nWater, int nLemonade, int nBeer,int *nTransaction) 
+{
+	int nBqty = 1; //bun qty
+  int nSqty = 1; //sauce qty
+  int nSDqty = 1; //side dish qty
+	int nTmp = 0;
+	int nTmp2 = 0;
+	int nInput;
+	int nNewchange;
+	char cSpace;
+	float fCucumberprice = 0;
+	float fCheeseprice = 0;
+	float fLettuceprice = 0;
+	float fBaconprice = 0;
+	float fTomatoprice = 0;
+	float fEggprice = 0;
+	float fMushroomprice = 0;
+	float fBunsprice = 0;
+  float fPorkprice = 0;
+  float fBeefprice = 0;
+  float fVeggiesprice = 0;
+	float fSaucesprice = 0;
+	float fSideDishesprice = 0;
+  float fWaterprice = 0;
+  float fLemonadeprice = 0;
+  float fBeerprice = 0;
+	double dPayment = 0;
+	double dChange;
+	
+	/* price for ingredients */
+	if (nCucumber > 0)     
+		fCucumberprice = nCucumber * 5;	
+	if (nCheese > 0)
+		fCheeseprice = nCheese * 15;
+	if (nLettuce > 0)
+		fLettuceprice = nLettuce * 10;
+	if (nBacon > 0)
+		fBaconprice = nBacon * 25;
+	if (nTomato > 0)
+		fTomatoprice = nTomato * 5;
+	if (nEgg > 0)
+		fEggprice = nEgg * 10;
+	if (nMushroom > 0)
+		fMushroomprice = nMushroom * 15;
+
+	/* price for buns, ingredients price increase depends on type */	
+	if (nBuns == 1) {
+		fBunsprice = 30;
+		fCucumberprice *= 1;
+		fCheeseprice *= 1;
+		fLettuceprice *= 1;
+		fBaconprice *= 1;
+		fTomatoprice *= 1;
+		fEggprice *= 1; 
+		fMushroomprice *= 1;
+	}
+	if (nBuns == 2) {
+		fBunsprice = 40;
+		fCucumberprice += 5;
+		fCheeseprice += 5;
+		fLettuceprice += 5;
+		fBaconprice += 5;
+		fTomatoprice += 5;
+		fEggprice += 5;
+		fMushroomprice += 5;
+	}
+	if (nBuns == 3) {
+		fBunsprice = 45;
+		fCucumberprice += 10;
+		fCheeseprice += 10;
+		fLettuceprice += 10;
+		fBaconprice += 10;
+		fTomatoprice += 10;
+		fEggprice += 10;
+		fMushroomprice += 10;
+	}
+  
+	/* price for patties */
+  if (nPork > 0)
+		fPorkprice = nPork * 50;
+	if (nBeef > 0)
+		fBeefprice = nBeef * 60;
+	if (nVeggies > 0)
+		fVeggiesprice = nVeggies * 70;
+	
+	/* price for sauces */
+	if (cSauce == 'k' || cSauce == 'K') 
+		fSaucesprice = 5;                      
+	if (cSauce == 'm' || cSauce == 'M') 
+		fSaucesprice = 8;
+	if (cSauce == 'a' || cSauce == 'A') 
+		fSaucesprice = 10;
+		
+	/* price for side dishes */
+	if (cSideDish == 'f' || cSideDish == 'F') 
+		fSideDishesprice = 35;
+	if (cSideDish == 't' || cSideDish == 'T') 
+		fSideDishesprice = 50;
+	if (cSideDish == 'n' || cSideDish == 'N') 
+		fSideDishesprice = 60;
+	
+	/* price for drnks */
+  if (nWater > 0)
+		fWaterprice = nWater * 20;
+	if (nLemonade > 0)
+		fLemonadeprice = nLemonade * 30;
+	if (nBeer > 0)
+		fBeerprice = nBeer * 50;
+
+  printf("\n=============================================================================== \n");
+	printf("-------------------------------- Order Summary -------------------------------- \n");
+	printf("Item                                                  Quantity           Price  \n");
+	printf("-------------------------------------------------------------------------------"   );	
+                                               
+	/* for buns*/
+	if (nBuns == 1)                   
+		printf("\nPlain Bun%49.d%20.2f",nBqty,fBunsprice); 
+ 	if (nBuns == 2)
+		printf("\nSesame Seeds Bun%42.d%20.2f",nBqty,fBunsprice);
+	if (nBuns == 3)
+		printf("\nBrioche Bun%47.d%20.2f",nBqty,fBunsprice);
+		
+	/* for patties*/
+  if (nPork > 0)                  
+		printf("\nPork Patty%48.d%20.2f",nPork,fPorkprice);
+	if (nBeef > 0)
+		printf("\nBeef Patty%48.d%20.2f",nBeef,fBeefprice);
+	if (nVeggies > 0)
+		printf("\nVeggie Patty%46.d%20.2f",nVeggies,fVeggiesprice);
+  
+	/* for ingredients*/	               	
+	if (nCucumber > 0)                                        
+		printf("\nCucumber%50.d%20.2f",nCucumber,fCucumberprice);
+	if (nCheese > 0)                                  
+		printf("\nCheese%52.d%20.2f",nCheese,fCheeseprice);
+	if (nLettuce > 0)                                   
+		printf("\nSausage%51.d%20.2f",nLettuce,fLettuceprice);
+	if (nBacon > 0)                                  
+		printf("\nBacon%53.d%20.2f",nBacon,fBaconprice);
+    if (nTomato > 0)                                  
+		printf("\nTomato%52.d%20.2f",nTomato,fTomatoprice);
+	if (nEgg > 0)                                   
+		printf("\nEgg%55.d%20.2f",nEgg,fEggprice);
+	if (nMushroom > 0)                                  
+		printf("\nOlives%52.d%20.2f",nMushroom,fMushroomprice);
+		
+	/* for sauces*/
+	if (cSauce == 'k' || cSauce == 'K')                 
+		printf("\nKetchup%51.d%20.2f",nSqty,fSaucesprice);
+  	if (cSauce == 'm' || cSauce == 'M') 
+		printf("\nMustard%51.d%20.2f",nSqty,fSaucesprice);
+	if (cSauce == 'a' || cSauce == 'A') 
+		printf("\nMayonnaise%48.d%20.2f",nSqty,fSaucesprice);
+  
+	/* for side dish*/	
+	if (cSideDish == 'f' || cSideDish == 'F')                  
+		printf("\nFries%53.d%20.2f",nSDqty,fSideDishesprice);
+	if (cSideDish == 't' || cSideDish == 'T') 
+		printf("\nTacos%53.d%20.2f",nSDqty,fSideDishesprice);
+	if (cSideDish == 'n' || cSideDish == 'N') 
+		printf("\nNuggets%51.d%20.2f",nSDqty,fSideDishesprice);
+  
+	/* for drinks*/
+	if (nWater > 0)                                        
+		printf("\nWater%53.d%20.2f",nWater,fWaterprice);
+	if (nLemonade > 0)                                  
+		printf("\nLemonade%50.d%20.2f",nLemonade,fLemonadeprice);
+	if (nBeer > 0)                                   
+		printf("\nBeer%54.d%20.2f",nBeer,fBeerprice);
+	
+	
+	printf("\n-------------------------------------------------------------------------------");
+	float fTotal = fBunsprice+ fPorkprice + fBeefprice + fVeggiesprice + 
+                 fCucumberprice + fCheeseprice + fLettuceprice + fBaconprice + fTomatoprice + fEggprice + fMushroomprice +
+                 fSaucesprice + fSideDishesprice + fWaterprice + fLemonadeprice + fBeerprice;
+            
+	int nFqty = nBqty + nPork + nBeef + nVeggies + 
+              nCucumber + nCheese + nLettuce + nBacon + nTomato + nEgg + nMushroom +
+              nSqty + nSDqty + nWater + nLemonade + nBeer;
+
+  
+	printf("\nTotal%53.d%20.2f",nFqty, fTotal);
+
+	printf("\n===============================================================================\n");
+	printf("\nPayment Option:");	
+	printf("\n (1) 1		(4) 20		(6) 500 ");
+	printf("\n (2) 5		(5) 100		(7) 1000 ");
+  	printf("\n (3) 10	                         ");
+ 
+	printf("\n\nInput Your Payment: ");
+	do {	
+		nTmp = 0;
+		if (nTmp2 != 0)
+			printf("Input Your Payment: ");
+		do {
+			if (nTmp != 0)
+				printf("Invalid Input!\n");
+			scanf("%d",&nInput); 
+			scanf("%c",&cSpace);
+			nTmp++;
+		} while (nInput < 0 || nInput > 7);
+		switch (nInput) {
+			case 0:
+				main();
+				break;
+			case 1: 
+				dPayment += 1;
+				break;
+			case 2:
+				dPayment += 5;
+				break;	
+			case 3:
+				dPayment += 10;
+				break;
+			case 4:
+				dPayment += 20;
+				break;
+			case 5:
+				dPayment += 100;
+				break;		
+			case 6:
+				dPayment += 500;
+				break;
+			case 7:
+				dPayment += 1000;
+				break;
+		}
+		nTmp2++;
+	} while (dPayment < fTotal);
+	
+
+	printf("+++++++++++++++++++++++++++++++ Payment Details +++++++++++++++++++++++++++++++\n");
+	printf("\nTOTAL PAYMENT:%17.2f",dPayment);
+	printf("\nTOTAL BILL:%20.2f", fTotal);
+	
+  dChange = dPayment - fTotal;
+    
+	printf("\nDISPENSING CHANGE:%13.2lf\n",dChange);
+	if (dChange == 0)
+		printf("(No change)\n");
+	printf("   Breakdown: \n");
+	if (dChange / 1000 >= 1) {
+		nNewchange = dChange / 1000;
+		printf("\t%d-1000\n",nNewchange);
+		dChange -= nNewchange * 1000;
+	}
+	if (dChange / 500 >= 1) {
+		nNewchange = dChange / 500;
+		printf("\t%d-500\n",nNewchange);
+		dChange -= nNewchange * 500;
+	}
+	if (dChange / 100 >= 1) {
+		nNewchange = dChange / 100;
+		printf("\t%d-100\n",nNewchange);
+		dChange -= nNewchange * 100;
+	}
+	if (dChange / 50 >= 1) {
+		nNewchange = dChange / 50;
+		printf("\t%d-50\n",nNewchange);
+		dChange -= nNewchange * 50;
+	}
+	if (dChange / 10 >= 1) {
+		nNewchange = dChange / 10;
+		printf("\t%d-10\n",nNewchange);
+		dChange -= nNewchange * 10;
+	}
+	if (dChange / 5 >= 1) {
+		nNewchange = dChange / 5;
+		printf("\t%d-5\n",nNewchange);
+		dChange -= nNewchange * 5;
+	}
+	if (dChange / 1 >= 1) {
+	    nNewchange = dChange / 1;
+		printf("\t%d-1\n",nNewchange);
+		dChange -= nNewchange * 1;
+	}
+
+	printf("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ \n");
+	printf(" > > >          YAY! YOUR BIG CAT BURGER WAS ORDERED SUCCESSFULLY!     < < <\n");
+	printf("                     Please wait a few minutes for your order.           \n");
+	printf("-------------------------------------------------------------------------------\n");
+	printf("Press enter to continue.\n");
+	scanf("%c", &cSpace);
+
+	printf("\n-------------------------------  ORDER COMPLETE -------------------------------\n");
+	printf("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n\n");
+	printf("            BIG CAT'S BURGERS                \n");
+	printf("        \"It's Big Cat or Nothing.\"         \n");
+	printf("         Huge Feline Corporation            \n");
+	printf("      VAT Reg TIN: 006-329-412-882          \n");
+	printf("           P0S04-SN:VDR45856                \n");
+  printf("         MIN#54614275275578274              \n");
+	printf("       For online orders, please            \n");
+	printf("      visit bigcatdelivers.com.ph           \n");
+	printf("=========================================== \n");
+	printf("       C U S T O M E R   C O P Y            \n");
+	printf("Cashier: Kent Mangu                \n");
+	printf("Transaction Number: %d\n", *nTransaction);
+	printf("=========================================== \n");
+  printf("            ---- O R D E R ----             \n");
+	printf("ITEM                      QTY       PRICE   \n");
+	
+if (nBuns == 1)                   
+		printf("\nPlain Bun%16.d%20.2f",nBqty,fBunsprice);
+ 	if (nBuns == 2)
+		printf("\nSesame Seeds Bun%9.d%20.2f",nBqty,fBunsprice);
+	if (nBuns == 3)
+		printf("\nBrioche Bun%14.d%20.2f",nBqty,fBunsprice);
+		
+	/* for patties*/
+  if (nPork > 0)                  
+		printf("\nPork Patty%15.d%20.2f",nPork,fPorkprice);
+	if (nBeef > 0)
+		printf("\nBeef Patty%15.d%20.2f",nBeef,fBeefprice);
+	if (nVeggies > 0)
+		printf("\nVeggie Patty%13.d%20.2f",nVeggies,fVeggiesprice);
+  
+	/* for ingredients*/	               	
+	if (nCucumber > 0)                                        
+		printf("\nCucumber%17.d%20.2f",nCucumber,fCucumberprice);
+	if (nCheese > 0)                                  
+		printf("\nCheese%19.d%20.2f",nCheese,fCheeseprice);
+	if (nLettuce > 0)                                   
+		printf("\nSausage%18.d%20.2f",nLettuce,fLettuceprice);
+	if (nBacon > 0)                                  
+		printf("\nBacon%20.d%20.2f",nBacon,fBaconprice);
+    if (nTomato > 0)                                  
+		printf("\nTomato%19.d%20.2f",nTomato,fTomatoprice);
+	if (nEgg > 0)                                   
+		printf("\nEgg%22.d%20.2f",nEgg,fEggprice);
+	if (nMushroom > 0)                                  
+		printf("\nOlives%19.d%20.2f",nMushroom,fMushroomprice);
+		
+		
+	/* for sauces*/
+	if (cSauce == 'k' || cSauce == 'K')                 
+		printf("\nKetchup%18.d%20.2f",nSqty,fSaucesprice);
+  	if (cSauce == 'm' || cSauce == 'M') 
+		printf("\nMustard%18.d%20.2f",nSqty,fSaucesprice);
+	if (cSauce == 'a' || cSauce == 'A') 
+		printf("\nMayonnaise%15d%20.2f",nSqty,fSaucesprice);
+  
+	/* for side dish*/	
+	if (cSideDish == 'f' || cSideDish == 'F')                  
+		printf("\nFries%10.d%20.2f",nSDqty,fSideDishesprice);
+	if (cSideDish == 't' || cSideDish == 'T') 
+		printf("\nTacos%10.d%20.2f",nSDqty,fSideDishesprice);
+	if (cSideDish == 'n' || cSideDish == 'N') 
+		printf("\nNuggets%18.d%20.2f",nSDqty,fSideDishesprice);
+  
+	/* for drinks*/
+	if (nWater > 0)                                        
+		printf("\nWater%16.d%20.2f",nWater,fWaterprice);
+	if (nLemonade > 0)                                  
+		printf("\nLemonade%17.d%20.2f",nLemonade,fLemonadeprice);
+	if (nBeer > 0)                                   
+		printf("\nBeer%21.d%20.2f",nBeer,fBeerprice);
+	
+	printf("\n------------------------------------------\n");
+	
+  printf("\nTOTAL PAYMENT:%17.2f",dPayment);
+	printf("\nTOTAL BILL:%20.2f\n", fTotal);
+	
+  dChange = dPayment - fTotal;
+  printf("Total Item Sold: %10.d\n", nFqty);
+	printf("Total Due: %19.2f\n", fTotal);
+  printf("Payment: %21.2f\n", fTotal);
+  dChange = dPayment - fTotal;
+  
+	printf("Change Due: %18.2lf\n", dChange);
+	printf("=========================================== \n");
+	printf("            Tell BIG CAT about              \n");
+    printf("           your experience !              \n");
+	printf("      www.bigcatcustomercare.com            \n");
+	printf("          customercare@bigcat.com           \n");
+    printf("              09454632275                 \n");
+	printf("******************************************* \n");
+	printf("         Thank you for ordering!            \n");
+	printf("    This serves as an OFFICIAL RECEIPT      \n");
+	scanf("%c",&cSpace);
+}
+
+void start(int *nTransaction)
+{ 
+	int nBuns; 
+	int nPork=0, nBeef=0, nVeggies=0; 
+	int nCucumber=0, nCheese=0, nLettuce=0, nBacon=0, nTomato=0,  nEgg=0, nMushroom=0;
+  int nWater=0, nLemonade=0, nBeer=0;
+	char cSauce; 
+	char cSideDish; 
+	char cDrink;
+
+	
+
+	displayGreetingNChoices ();
+	buns(&nBuns) ;
+	if (nBuns != 80808) {
+    patty (&nPork, &nBeef, &nVeggies, &*nTransaction);
+		ingredients(&nCucumber, &nCheese, &nLettuce, &nBacon, &nTomato, &nEgg, &nMushroom, &*nTransaction);	
+		sauces (&cSauce, &*nTransaction);
+		sideDishes (&cSideDish, &*nTransaction);
+		drinks(&nWater, &nLemonade, &nBeer, &*nTransaction);
+    payment (nBuns, nPork, nBeef, nVeggies, nCucumber, nCheese, nLettuce, nBacon, nTomato,  
+            nEgg, nMushroom, cSauce, cSideDish, nWater, nLemonade, nBeer, &*nTransaction);
+		*nTransaction += 1;
+		printf("\n\n");
+	  start(&*nTransaction);
+	}
+}
+
+/* This main function is the sequence of the progam */
+int main()
+{	
+	int nTransaction = 1;
+	start(&nTransaction);
+	return 0;
 }
